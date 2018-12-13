@@ -30,8 +30,8 @@
 #			Usuario=X -> X sería el usuario del fichero. Fácil de averigüar con stat.
 # 			Si los argumentos son 2 y Usuario no está en $Usuarios (echo $Usuarios | grep ";$Usuario;") -> Continue
 # 			$FYC=$FYC$fichero;
-#       Lectura=0
-#       Escritura=0
+#		        Lectura=0
+#       		Escritura=0
 # 			Para cada proceso j vigente -> for pid2 in $(ls /proc | grep -E "[0-9]+" | sort -n)
 # 				Si el número del proceso nuevo es menor que i -> break; (EVIDENTEMENTE NO HAY QUE CONSIDERAR LOS PROCESOS YA RECORRIDOS -> EFICIENCIA)
 # 				Para cada fichero f1 en cada proceso -> Ubicado en la carpeta /proc/$pid2/fd
