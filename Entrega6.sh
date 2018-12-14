@@ -12,7 +12,7 @@
 #
 # Si los argumentos son 2
 # 	Comprobar que el primer argumento es '-u'. Si no, die().
-# 	Usuarios=,$3, (ESTO LO HAGO PARA IDENTIFICAR QUE TODOS LOS USUARIOS SE ENCUENTRAN ENTRE COMAS -> MUY IMPORTANTE PARA LA EFICIENCIA)
+# 	Usuarios=,$2, (ESTO LO HAGO PARA IDENTIFICAR QUE TODOS LOS USUARIOS SE ENCUENTRAN ENTRE COMAS -> MUY IMPORTANTE PARA LA EFICIENCIA)
 # 	Para cada usuario dentro de Usuarios
 # 		Comprobar que existe en /etc/passwd. Si no, die().
 # 	Fin para
@@ -50,19 +50,21 @@ die()
 	exit 1
 
 }
+
 #Comprobaciones
-if(($# == 1 || $# < 2)); then 
+if(($# == 1 || $# > 2)); then 
 	die "Fallo en el argumento"
 fi
-if(($# >= 2)); then 
+if(($# == 2)); then 
 	[[ $1 == "-u" ]] || die "No se encontro la opción -u"
 	for usuario in $(echo $2 | tr "," "\n"); do
-		id $usuario 2>1 > /dev/null
+		id $usuario 2>/dev/null
 		if(( $? == 1)); then
 			die "El usuario $usuario no existe"
 		fi
 	done	
 fi
+
 #Cuerpo del programa
 usuarios=",$2,"
 FYC=","
@@ -71,18 +73,21 @@ for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 	#suele haber fallos en los últimos procesos porque no tiene el fd-->los fallos a la basura
 	for fichero in $(ls /proc/$pid/fd 2> /dev/null); do
 		#tendríamos que sacar del descriptor de ficheros el fichero en sí al que hace referencia
-		echo $FYC | grep ",$fichero," 2>1 > /dev/null
+		echo $FYC | grep ",$fichero," >/dev/null 2>/dev/null
 		if(( $? == 1 )); then
 			usuario=$(stat -c "%U" "/proc/$pid/fd/$fichero" 2> /dev/null)
-			echo $usuarios | grep "$usuario" 2>1 > /dev/null			
-			if(($? == 1 && $# >= 2)); then
+			echo $usuarios | grep "$usuario" >/dev/null 2>/dev/null			
+			if(($? == 1 && $# == 2)); then
 				continue
 			fi
+			$FYC=$FYC$fichero,
+			Lectura=0
+			Escritura=0
+			//CONTINUAR AQUÍ
 		else 
 			continue
 		fi
-		FYC="$FYC$fichero,";
-		echo "$FCY"
+		echo "Resultado ="
 	done
 done
 exit 0
