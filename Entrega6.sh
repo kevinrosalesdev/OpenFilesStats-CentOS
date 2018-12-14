@@ -65,7 +65,7 @@ if(($# >= 2)); then
 fi
 #Cuerpo del programa
 usuarios=",$2,"
-FYC=";"
+FYC=","
 for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 	echo "PID==$pid"
 	#suele haber fallos en los últimos procesos porque no tiene el fd-->los fallos a la basura
@@ -81,7 +81,7 @@ for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 		else 
 			continue
 		fi
-		FYC="$FYC$fichero;";
+		FYC="$FYC$fichero,";
 		echo "$FCY"
 	done
 done
