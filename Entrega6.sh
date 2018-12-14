@@ -58,7 +58,7 @@ fi
 if(($# == 2)); then 
 	[[ $1 == "-u" ]] || die "No se encontro la opción -u"
 	for usuario in $(echo $2 | tr "," "\n"); do
-		id $usuario 2>/dev/null
+		id $usuario >/dev/null 2>/dev/null
 		if(( $? == 1)); then
 			die "El usuario $usuario no existe"
 		fi
