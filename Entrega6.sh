@@ -71,7 +71,7 @@ for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 	#suele haber fallos en los últimos procesos porque no tiene el fd-->los fallos a la basura
 	for fichero in $(ls /proc/$pid/fd 2> /dev/null); do
 		#tendríamos que sacar del descriptor de ficheros el fichero en sí al que hace referencia
-		echo $FYC | grep ";$fichero;" 2>1 > /dev/null
+		echo $FYC | grep ",$fichero," 2>1 > /dev/null
 		if(( $? == 1 )); then
 			usuario=$(stat -c "%U" "/proc/$pid/fd/$fichero" 2> /dev/null)
 			echo $usuarios | grep "$usuario" 2>1 > /dev/null			
