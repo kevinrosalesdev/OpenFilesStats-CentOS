@@ -85,17 +85,17 @@ for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 			Escritura=0
 			//CONTINUAR AQUÍ
 			//Parte de Héctor empieza aquí
-			for pid2 in  $(ls /proc | grep -E "[0-9]+" | sort -n ); do
+			for pid2 in  $(ls /proc | grep -E "[0-9]+" ); do
 				if   (( $pid2 < $pid));then
 					break;
 				fi
 				for f1 in $(ls /proc/$pid2/fd);do
 					if [ $f1=$fichero ] ; then
 						if [ -t  /proc/$pid2/fd/$f1 ]; then
-							Lectura= $(( $Lecutra + 1 ))
+							((Lectura++))
 						fi
 						if [ -h /proc/$pid2/fd/$f1 ];then
-							Escritura= $(( $Escritura + 1 ))
+							((Escritura++))
 						fi
 					fi
 				done
