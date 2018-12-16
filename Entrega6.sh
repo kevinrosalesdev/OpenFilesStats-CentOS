@@ -80,16 +80,14 @@ for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 			if(($? == 1 && $# == 2)); then
 				continue
 			fi
-			$FYC=$FYC$fichero,
+			FYC=$FYC$fichero
 			Lectura=0
 			Escritura=0
-			//CONTINUAR AQUÍ
-			//Parte de Héctor empieza aquí
-			for pid2 in  $(ls /proc | grep -E "[0-9]+" ); do
+			for pid2 in  $(ls /proc | grep -E "[0-9]+" 2> /dev/null); do
 				if   (( $pid2 < $pid));then
 					break;
 				fi
-				for f1 in $(ls /proc/$pid2/fd);do
+				for f1 in $(ls /proc/$pid2/fd 2> /dev/null);do
 					if [ $f1=$fichero ] ; then
 						if [ -t  /proc/$pid2/fd/$f1 ]; then
 							((Lectura++))
@@ -100,11 +98,10 @@ for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 					fi
 				done
 			done
-			//Parte de Héctor  termina aquí
 		else 
 			continue
 		fi
-		echo "Resultado ="
+		echo "Fichero = $fichero	NºLecturas = $Lectura	NºEscrituras = $Escritura	Propietario = $usuario"
 	done
 done
 exit 0
