@@ -71,16 +71,16 @@ FYC=","
 for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 	echo "PID==$pid"
 	#suele haber fallos en los últimos procesos porque no tiene el fd-->los fallos a la basura
-	for fichero in $(ls /proc/$pid/fd 2> /dev/null); do
+	for fichero in $(stat -c "%N" /proc/$pid/fd/* | cut -f3 -d"«" | tr -s "»" "\0" 2> /dev/null ); do
 		#tendríamos que sacar del descriptor de ficheros el fichero en sí al que hace referencia
 		echo $FYC | grep ",$fichero," >/dev/null 2>/dev/null
 		if(( $? == 1 )); then
-			usuario=$(stat -c "%U" "/proc/$pid/fd/$fichero" 2> /dev/null)
+			usuario=$(stat -c "%U" "$fichero" 2> /dev/null)
 			echo $usuarios | grep "$usuario" >/dev/null 2>/dev/null			
 			if(($? == 1 && $# == 2)); then
 				continue
 			fi
-			FYC=$FYC$fichero
+			FYC=$FYC$fichero,
 			Lectura=0
 			Escritura=0
 			for pid2 in  $(ls /proc | grep -E "[0-9]+" 2> /dev/null); do
@@ -88,11 +88,14 @@ for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 					break;
 				fi
 				for f1 in $(ls /proc/$pid2/fd 2> /dev/null);do
-					if [ $f1=$fichero ] ; then
-						if [ -t  /proc/$pid2/fd/$f1 ]; then
+					fichero2=$(stat -c "%N" /proc/$pid2/fd/$f1 2> /dev/null | cut -f3 -d"«" | tr -s "»" "\0")
+					#echo 
+					if [ "$fichero2" == "$fichero" ] ; then
+						perm=$(stat -c "%a" /proc/$pid2/fd/$f1 2> /dev/null)
+						if(($perm & 400)); then
 							((Lectura++))
 						fi
-						if [ -h /proc/$pid2/fd/$f1 ];then
+						if(($perm & 200));then
 							((Escritura++))
 						fi
 					fi
