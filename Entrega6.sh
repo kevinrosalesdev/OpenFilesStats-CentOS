@@ -92,10 +92,10 @@ for pid in $(ls /proc | grep -E "[0-9]+" | sort -n);do
 					#echo 
 					if [ "$fichero2" == "$fichero" ] ; then
 						perm=$(stat -c "%a" /proc/$pid2/fd/$f1 2> /dev/null)
-						if(($perm & 400)); then
+						if(((0x$perm & 0x400) != 0)); then
 							((Lectura++))
 						fi
-						if(($perm & 200));then
+						if(((0x$perm & 0x200) != 0));then
 							((Escritura++))
 						fi
 					fi
