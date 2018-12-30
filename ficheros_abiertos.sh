@@ -60,7 +60,7 @@ for pid in $(ls /proc | grep -E "[0-9]+"); do
 		if(((0x${perm} & 0x400) != 0)); then
 			lecturaActual=$(echo "${ficheros[${fichero}]}" | cut -f1 -d" ")
 			escrituraActual=$(echo "${ficheros[${fichero}]}" | cut -f2 -d" ")
-			ficheros[$fichero]="$(( ${lecturaActual} + 1 )) ${escrituraActual} ${usuario}"
+			ficheros[${fichero}]="$(( ${lecturaActual} + 1 )) ${escrituraActual} ${usuario}"
 		fi
 		if(((0x${perm} & 0x200) != 0)); then
 			lecturaActual=$(echo "${ficheros[${fichero}]}" | cut -f1 -d" ")
