@@ -1,32 +1,32 @@
 Informe Práctica 6: Trabajo 2. Visualizar ficheros abiertos. Grupo _t3_43
 
- a) Estrategia para resolver el problema
+ a) Estrategia para resolver el problema.
  Primero cogemos los usuarios que nos han pasado por parámetro y comprobando que existen,
- después se va buscando en el fd del /proc y extraemos el descriptor de fichero
+ después se va buscando en el fd del /proc y extraemos el descriptor de fichero,
  (con "stat -c" y cortando el resultado para guardarlo en una variable) para comparar
  con la lista de usuarios que nos han dado anteriormente, si este coincide se le
  aumentara si esta siendo leído o escrito mediante los permisos que se encuentren en este,
- todo esto lo guardaremos en un array asociativo para cuando termine de recorrer todos los
- procesos además de que es más eficiente. Una vez recorrido todo el /proc
+ todo esto lo guardaremos en un array asociativo, para cuando termine de recorrer todos los
+ procesos además de que es más eficiente. Una vez recorrido todo el /proc,
  se imprimen todos los ficheros abiertos encontrados y que obviamente cumpla con
- los requisitos si se le ha añadido que se busque por usuarios, a la hora de imprimir
+ los requisitos, si se le ha añadido que se busque por usuarios, a la hora de imprimir
  la lista de ficheros abiertos encontrados se señalará con una cabecera con un
- número para identificarlo y separadores para no mezclar la información extraída de
+ número para identificarlo y separadores, para no mezclar la información extraída de
  uno en otro, además se especificará el nombre del fichero en cuestión con su ruta
- absoluta
+ absoluta.
 
-b) Opciones adicionales
+b) Opciones adicionales.
 El enunciado no tenía ninguna opción adicional más allá de realizar la búsqueda por
 usuarios propietarios o por todos los ficheros abiertos.
 
-c) Comprobación de correcto funcionamiento
+c) Comprobación de correcto funcionamiento.
 Ver por ejemplo que si buscamos por el propietario del propio script vemos que solo
 debería tener una lectura y cero escrituras, otra comprobación más es dejar un proceso
-que abra y escriba un fichero que nadie tenga abierto y comprobar que en el script
-muestre que en ese fichero se esté leyendo y escribiendo al menos por un proceso
+que abra y escriba un fichero que nadie tenga abierto, comprobar que en el script
+muestre que en ese fichero se esté leyendo y escrito al menos por un proceso
 (el cual debería ser el que hemos lanzado).
 
-d) Fallos pendientes por resolver
+d) Fallos pendientes por resolver.
 Ninguno, pero si hubiese a llegar alguno en son controlados y continua la ejecución
 a no ser que sea un fallo por argumentos o por usuarios no existentes que entonces
 pararía.
