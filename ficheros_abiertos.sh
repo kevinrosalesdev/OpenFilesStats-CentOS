@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #Función que se encarga de salir del Script notificando un error.
 die()
 {
