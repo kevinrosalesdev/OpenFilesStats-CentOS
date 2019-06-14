@@ -45,10 +45,10 @@ Script follows this trace:
 Output Results should be something like this if nothing goes wrong:
 
 ```bash
-[Realizando recorrido del /proc...]		<= Script starting...
-[Recorrido Finalizado]					   <= Script ended
+[Realizando recorrido del /proc...]    <= Script starting...
+[Recorrido Finalizado]                 <= Loading Process ended
 =========================[Fichero Número: 1]========================= 	<= File Number
-Fichero=/root/.local/share/gvfs-metadata/home							      <= File Name
+Fichero=/root/.local/share/gvfs-metadata/home  <= File Name
 NºLecturas=2	<= Number of times that file is being opened to be read by processes
 NºEscrituras=0	<= Number of times that file is being opened to be written by processes
 Usuario=root	<= File Owner's Name
