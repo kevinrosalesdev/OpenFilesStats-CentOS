@@ -9,7 +9,7 @@ This project has been done by these contributors, be sure to **check them out!**
 
 ***
 
-The main purpose of this project is to write a Script that shows features about **Open Files in a *Linux System.***
+The main purpose of this project is to develop a Script that shows features about **Open Files in a *Linux System.***
 
 ## Requirements:
 
